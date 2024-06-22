@@ -6,13 +6,11 @@
 /*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 13:43:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/06/22 14:14:11 by educastro        ###   ########.fr       */
+/*   Updated: 2024/06/22 14:48:10 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	print_message(t_philo *philo)
 
 void	think(t_philo *philo)
 {
