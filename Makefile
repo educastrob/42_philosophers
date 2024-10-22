@@ -20,7 +20,7 @@ FLAGS = -Wall -Wextra -Werror -O3 -pthread
 
 HEADER = ./includes/philo.h
 
-# SANITIZER = -fsanitize=thread
+SANITIZER = -fsanitize=thread
 
 all: $(NAME)
 
