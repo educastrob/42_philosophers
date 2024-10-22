@@ -1,25 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 13:43:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/06/22 14:48:10 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/22 18:32:53 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philosophers.h"
 
-void	think(t_philo *philo)
-{
-	printf("is thinking");
-}
-
-void	dream(t_philo *philo)
-{
-	printf("is sleeping");
-	usleep(philo->time_to_sleep);
-}
-
+enum e_bool	init_data()

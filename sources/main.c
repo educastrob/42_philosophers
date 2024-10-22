@@ -3,26 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:03:04 by educastro         #+#    #+#             */
-/*   Updated: 2024/06/22 14:12:59 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/22 18:42:48 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philosophers.h"
 
-void	init_input(philo_t philo, char **av)
+enum e_bool	philo_init(t_data *data, int i)
 {
-	philo->num_of_philos = atoi(av[1]);
-	philo->time_to_die = atoi(av[2]);
-	philo->time_to_eat = atoi(av[3]);
-	philo->time_to_sleep = atoi(av[4]);
+	philo->philos[i].n = i + 1;
+	philo->philos[i].data = data;
+	philo->philos[i].eat_count = 0;
+	philo->philos[i].t_last_eat = 0;
+	philo->philos[i].fork_right = NULL;
+	if (pthread_mutex_init(&(data->philos[i].fork_left), NULL) != 0)
+		return (FALSE);
+	if (pthread_mutex_init(&(data->philos[i].m_eat), NULL) != 0)
+		return (FALSE);
+	if (i == data->n_philo - 1)
+		data->philos[i].fork_right = &(data->philos[0].fork_left);
+	else
+		data->philos[i].fork_right = &(data->philos[i + 1].fork_left);
+	return (TRUE);
 }
 
 int	main(int ac, char **av)
 {	
-	t_philo		philos[PHILO_MAX];
+	t_data	data;
 
-	init_input(philos, av);
+	if (argc != 5 && argc != 6)
+		return (EXIT_FAILURE);
+	if (!init_data(&data, argv))
+	{
+		if (data.philos != NULL)
+			free(data.philos);
+		return (EXIT_FAILURE);
+	}
+	// philo_handler(&data);
+	free_all(&data);
+	return (EXIT_SUCCESS);
 }

@@ -3,29 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: educastro <educastro@student.42.fr>        +#+  +:+       +#+         #
+#    By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 04:35:57 by educastro         #+#    #+#              #
-#    Updated: 2024/06/22 14:01:46 by educastro        ###   ########.fr        #
+#    Updated: 2024/10/22 18:45:30 by edcastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC = main.c actions.c
+SRC = main.c init.c exit.c
 
-MANPATH = $(addprefix ./sources/, $(SRC))
+MAINPATH = $(addprefix ./sources/, $(SRC))
 
 FLAGS = -Wall -Wextra -Werror -O3 -pthread
 
-HEADER = ./includes/philo.h
+HEADER = ./includes/philosophers.h
 
 SANITIZER = -fsanitize=thread
 
 all: $(NAME)
 
 $(NAME): $(MANPATH) $(HEADER)
-	@cc $(FLAGS) -o $(NAME) $(MANPATH) $(SANITIZER)
+	@cc $(FLAGS) -o $(NAME) $(MAINPATH) $(SANITIZER)
 
 clean:
 	@rm -f $(NAME)
