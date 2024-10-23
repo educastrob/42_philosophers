@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:02:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 21:22:12 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:31:51 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 typedef struct t_data;
 typedef struct t_philo;
@@ -63,7 +64,7 @@ enum e_bool	init_data(t_data *data, char **argv);
 void	free_all(t_data *data);
 
 // utils.c
-enum e_bool	is_dead(t_philo *philo, bool set_dead);
+enum e_bool	is_dead(t_philo *philo, enum e_bool set_dead);
 long int	timestamp(void);
 void		msleep(int ms);
 enum e_bool	philo_init(t_data *data, int i);

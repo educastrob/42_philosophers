@@ -6,19 +6,19 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:20:56 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/22 21:21:40 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:31:39 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-enum e_bool	is_dead(t_philo *philo, bool set_dead)
+enum e_bool	is_dead(t_philo *philo, enum e_bool set_dead)
 {
-	bool	ret;
+	enum e_bool	ret;
 
 	pthread_mutex_lock(&philo->data->m_dead);
 	if (set_dead)
-		philo->data->stop = true;
+		philo->data->stop = TRUE;
 	ret = philo->data->stop;
 	pthread_mutex_unlock(&philo->data->m_dead);
 	return (ret);

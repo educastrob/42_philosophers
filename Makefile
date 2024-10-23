@@ -6,13 +6,13 @@
 #    By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 04:35:57 by educastro         #+#    #+#              #
-#    Updated: 2024/10/22 18:45:30 by edcastro         ###   ########.fr        #
+#    Updated: 2024/10/23 18:53:50 by edcastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC = main.c init.c exit.c
+SRC = main.c init.c exit.c utils.c philosophers.c
 
 MAINPATH = $(addprefix ./sources/, $(SRC))
 
