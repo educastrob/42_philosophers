@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:20:56 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/23 17:31:39 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:01:23 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ void	msleep(int ms)
 	time = timestamp();
 	while (timestamp() - time < ms)
 		usleep(ms / 10);
+}
+
+void	print(t_philo *philo, char *str)
+{
+	long int	time;
+
+	time = timestamp() - philo->data->t_start;
+	if (!is_dead(philo, FALSE))
+	{
+		pthread_mutex_lock(&(philo->data->m_print));
+		printf("%ldms %d %s", time, philo->n, str);
+		pthread_mutex_unlock(&(philo->data->m_print));
+	}
 }
 
 enum e_bool	philo_init(t_data *data, int i)

@@ -6,12 +6,11 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 13:43:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 21:10:23 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:16:41 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
 
 static enum e_bool	check_args(char **argv)
 {

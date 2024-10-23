@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:03:04 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 21:21:17 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:18:15 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 			free(data.philos);
 		return (EXIT_FAILURE);
 	}
-	// philo_handler(&data);
+	philo_handler(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }
