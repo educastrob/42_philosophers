@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 22:03:04 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 21:21:17 by edcastro         ###   ########.fr       */
+/*   Created: 2024/10/22 20:41:29 by edcastro          #+#    #+#             */
+/*   Updated: 2024/10/22 20:41:42 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int ac, char **av)
-{	
-	t_data	data;
-
-	if (argc != 5 && argc != 6)
-		return (EXIT_FAILURE);
-	if (!init_data(&data, argv))
-	{
-		if (data.philos != NULL)
-			free(data.philos);
-		return (EXIT_FAILURE);
-	}
-	// philo_handler(&data);
-	free_all(&data);
-	return (EXIT_SUCCESS);
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (42);
+	else
+		return (0);
 }

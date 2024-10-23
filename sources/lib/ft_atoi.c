@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 22:03:04 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 21:21:17 by edcastro         ###   ########.fr       */
+/*   Created: 2024/10/22 20:40:09 by edcastro          #+#    #+#             */
+/*   Updated: 2024/10/22 20:40:10 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int ac, char **av)
-{	
-	t_data	data;
+long int	ft_atoi(const char *str)
+{
+	size_t		i;
+	long int	ret;
+	int			sig;
 
-	if (argc != 5 && argc != 6)
-		return (EXIT_FAILURE);
-	if (!init_data(&data, argv))
+	i = 0;
+	sig = 1;
+	ret = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-')
+		sig = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
 	{
-		if (data.philos != NULL)
-			free(data.philos);
-		return (EXIT_FAILURE);
+		ret = ret * 10 + (sig * (str[i] - '0'));
+		i++;
 	}
-	// philo_handler(&data);
-	free_all(&data);
-	return (EXIT_SUCCESS);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:02:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/22 18:42:35 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:22:12 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 typedef struct t_data;
@@ -56,10 +57,20 @@ typedef struct s_philo
 }				t_philo;
 
 // init.c
-
+enum e_bool	init_data(t_data *data, char **argv);
 
 // exit.c
 void	free_all(t_data *data);
 
+// utils.c
+enum e_bool	is_dead(t_philo *philo, bool set_dead);
+long int	timestamp(void);
+void		msleep(int ms);
+enum e_bool	philo_init(t_data *data, int i);
+
+// lib
+long int	ft_atoi(const char *str);
+int			ft_isdigit(int c);
+int			ft_isspace(int c);
 
 #endif
