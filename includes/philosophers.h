@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:02:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/23 20:01:47 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:59:31 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct t_data;
-typedef struct t_philo;
+typedef struct s_data t_data;
+typedef struct t_philo t_philo;
 
 // enums
 enum e_bool
