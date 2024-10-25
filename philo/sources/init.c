@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 13:43:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/25 16:01:00 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/25 17:10:09 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
+
+static enum e_bool	check_args(char **argv);
+static enum e_bool	init_mutex(t_data *data);
+static enum e_bool	init_args(t_data *data, char **argv);
+
+enum e_bool	init_data(t_data *data, char **argv)
+{
+	if (!check_args(argv))
+	{
+		printf("Invalid Arguments\n");
+		return (FALSE);
+	}
+	ft_memset(data, 0, sizeof(t_data));
+	if (!init_mutex(data))
+		return (FALSE);
+	data->n_philo = ft_atoi(argv[1]);
+	if (data->n_philo <= 0)
+		return (FALSE);
+	data->philos = malloc(sizeof(t_philo) * data->n_philo);
+	if (data->philos == NULL)
+		return (FALSE);
+	ft_memset(data->philos, 0, sizeof(t_philo) * data->n_philo);
+	if (!init_args(data, argv))
+	{
+		printf("Invalid Arguments\n");
+		return (FALSE);
+	}
+	return (TRUE);
+}
 
 static enum e_bool	check_args(char **argv)
 {
@@ -23,7 +52,7 @@ static enum e_bool	check_args(char **argv)
 		j = 0;
 		while (ft_isspace(argv[i][j]))
 			j++;
-		if (argv[i][j] == '+' || argv[i][j] == '-')
+		if (argv[i][j] == '-' || argv[i][j] == '+')
 			j++;
 		if (argv[i][j] == '\0')
 			return (FALSE);
@@ -33,13 +62,14 @@ static enum e_bool	check_args(char **argv)
 				return (FALSE);
 			j++;
 		}
+		i++;
 	}
 	return (TRUE);
 }
 
 static enum e_bool	init_mutex(t_data *data)
 {
-	if (pthread_mutex_init(&data->m_print, NULL) != 0 \
+	if (pthread_mutex_init(&data->m_print, NULL) != 0
 		|| pthread_mutex_init(&data->m_dead, NULL) != 0)
 		return (FALSE);
 	return (TRUE);
@@ -58,31 +88,6 @@ static enum e_bool	init_args(t_data *data, char **argv)
 		data->n_eat = ft_atoi(argv[5]);
 		if (data->n_eat <= 0)
 			return (FALSE);
-	}
-	return (TRUE);
-}
-
-enum e_bool	init_data(t_data *data, char **argv)
-{
-	if (!check_args(argv))
-	{
-		printf("Error: Invalid arguments\n");
-		return (FALSE);
-	}
-	memset(data, 0, sizeof(t_data));
-	if (!init_mutex(data))
-		return (FALSE);
-	data->n_philo = ft_atoi(argv[1]);
-	if (data->n_philo <= 0)
-		return (FALSE);
-	data->philos = malloc(data->n_philo * sizeof(t_philo));
-	if (data->philos == NULL)
-		return (FALSE);
-	memset(data->philos, 0, data->n_philo * sizeof(t_philo));
-	if (!init_args(data, argv))
-	{
-		printf("Error: Invalid arguments\n");
-		return (FALSE);
 	}
 	return (TRUE);
 }

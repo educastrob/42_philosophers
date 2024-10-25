@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: educastro <educastro@student.42.fr>        +#+  +:+       +#+         #
+#    By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 04:35:57 by educastro         #+#    #+#              #
-#    Updated: 2024/10/25 16:10:06 by educastro        ###   ########.fr        #
+#    Updated: 2024/10/25 17:18:54 by edcastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS := sources/philosophers.c \
 		sources/main.c
 SRCS += sources/lib/ft_isspace.c \
         sources/lib/ft_atoi.c \
-        sources/lib/ft_isdigit.c
+        sources/lib/ft_isdigit.c \
+        sources/lib/ft_memset.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)

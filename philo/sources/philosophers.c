@@ -3,61 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 16:00:26 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/25 17:10:31 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
-static void	philo_eat(t_philo *philo)
-{
-	print(philo, "is eating\n");
-	pthread_mutex_lock(&(philo->m_eat));
-	philo->t_last_eat = timestamp();
-	philo->eat_count++;
-	pthread_mutex_unlock(&(philo->m_eat));
-	msleep(philo->data->t_eat);
-	pthread_mutex_unlock(philo->fork_right);
-	pthread_mutex_unlock(&(philo->fork_left));
-	print(philo, "is sleeping\n");
-	msleep(philo->data->t_sleep);
-	print(philo, "is thinking\n");
-}
+static void	*check_death(void *content);
+static void	*philo_life(void *content);
+static void	take_fork(t_philo *philo);
+static void	philo_eat(t_philo *philo);
 
-static void	take_fork(t_philo *philo)
+enum e_bool	philo_handler(t_data *data)
 {
-	pthread_mutex_lock(&(philo->fork_left));
-	print(philo, "has taken a fork\n");
-	if (philo->data->n_philo == 1)
+	int	i;
+
+	i = 0;
+	while (i < data->n_philo)
+		if (!philo_init(data, i++))
+			return (FALSE);
+	i = 0;
+	data->t_start = timestamp();
+	while (i < data->n_philo)
 	{
-		msleep(philo->data->t_die * 2);
-		return ;
+		if (pthread_create(&data->philos[i].thread, NULL, &philo_life,
+				&(data->philos[i])) != 0)
+			return (FALSE);
+		i++;
 	}
-	pthread_mutex_lock(philo->fork_right);
-	print(philo, "has a taken a fork\n");
-}
-
-static void	*check_death(void *content)
-{
-	t_philo	*philo;
-
-	philo = content;
-	msleep(philo->data->t_die + 1);
-	pthread_mutex_lock(&philo->m_eat);
-	if ((timestamp() - philo->t_last_eat) >= philo->data->t_die)
-	{
-		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
-			return (NULL);
-		pthread_mutex_unlock(&philo->m_eat);
-		print(philo, "died\n");
-		is_dead(philo, TRUE);
-		return (NULL);
-	}
-	pthread_mutex_unlock(&philo->m_eat);
-	return (NULL);
+	i = 0;
+	while (i < data->n_philo)
+		if (pthread_join(data->philos[i++].thread, NULL) != 0)
+			return (FALSE);
+	return (TRUE);
 }
 
 static void	*philo_life(void *content)
@@ -80,31 +61,50 @@ static void	*philo_life(void *content)
 	return (NULL);
 }
 
-enum e_bool	philo_handler(t_data *data)
+static void	*check_death(void *content)
 {
-	int	i;
+	t_philo	*philo;
 
-	i = 0;
-	while (i < data->n_philo)
+	philo = content;
+	msleep(philo->data->t_die + 1);
+	pthread_mutex_lock(&philo->m_eat);
+	if ((timestamp() - philo->t_last_eat) >= philo->data->t_die)
 	{
-		if (!philo_init(data, i++))
-			return (FALSE);
+		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
+			return (NULL);
+		pthread_mutex_unlock(&philo->m_eat);
+		print(philo, "died\n");
+		is_dead(philo, TRUE);
+		return (NULL);
 	}
-	i = 0;
-	data->t_start = timestamp();
-	while (i < data->n_philo)
+	pthread_mutex_unlock(&philo->m_eat);
+	return (NULL);
+}
+
+static void	take_fork(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->fork_l));
+	print(philo, "has taken a fork\n");
+	if (philo->data->n_philo == 1)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, &philo_life, \
-			&(data->philos[i])) != 0)
-			return (FALSE);
-		i++;
+		msleep(philo->data->t_die * 2);
+		return ;
 	}
-	i = 0;
-	while (i < data->n_philo)
-	{
-		if (pthread_join(data->philos[i].thread, NULL) != 0)
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
+	pthread_mutex_lock((philo->fork_r));
+	print(philo, "has taken a fork\n");
+}
+
+static void	philo_eat(t_philo *philo)
+{
+	print(philo, "is eating\n");
+	pthread_mutex_lock(&(philo->m_eat));
+	philo->t_last_eat = timestamp();
+	philo->eat_count++;
+	pthread_mutex_unlock(&(philo->m_eat));
+	msleep(philo->data->t_eat);
+	pthread_mutex_unlock((philo->fork_r));
+	pthread_mutex_unlock(&(philo->fork_l));
+	print(philo, "is sleeping\n");
+	msleep(philo->data->t_sleep);
+	print(philo, "is thinking\n");
 }

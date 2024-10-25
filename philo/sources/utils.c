@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:20:56 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 16:02:26 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/25 17:10:41 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 enum e_bool	is_dead(t_philo *philo, enum e_bool set_dead)
 {
@@ -60,14 +60,14 @@ enum e_bool	philo_init(t_data *data, int i)
 	data->philos[i].data = data;
 	data->philos[i].eat_count = 0;
 	data->philos[i].t_last_eat = 0;
-	data->philos[i].fork_right = NULL;
-	if (pthread_mutex_init(&(data->philos[i].fork_left), NULL) != 0)
+	data->philos[i].fork_r = NULL;
+	if (pthread_mutex_init(&(data->philos[i].fork_l), NULL) != 0)
 		return (FALSE);
 	if (pthread_mutex_init(&(data->philos[i].m_eat), NULL) != 0)
 		return (FALSE);
 	if (i == data->n_philo - 1)
-		data->philos[i].fork_right = &(data->philos[0].fork_left);
+		data->philos[i].fork_r = &data->philos[0].fork_l;
 	else
-		data->philos[i].fork_right = &(data->philos[i + 1].fork_left);
+		data->philos[i].fork_r = &data->philos[i + 1].fork_l;
 	return (TRUE);
 }

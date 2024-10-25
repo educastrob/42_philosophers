@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 20:38:23 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 15:55:09 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/25 17:07:51 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "philosophers.h"
 
-int	ft_isspace(int c)
+enum e_bool	ft_isspace(int c)
 {
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	return (0);
+	return ((c >= 9 && c <= 13) || (c == ' '));
 }
