@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 17:10:31 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/25 19:48:38 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	*check_death(void *content)
 	t_philo	*philo;
 
 	philo = content;
-	msleep(philo->data->t_die + 1);
+	msleep(philo->data->t_die);
 	pthread_mutex_lock(&philo->m_eat);
 	if ((timestamp() - philo->t_last_eat) >= philo->data->t_die)
 	{
