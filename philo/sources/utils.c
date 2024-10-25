@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:20:56 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/23 20:01:23 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:02:26 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 enum e_bool	is_dead(t_philo *philo, enum e_bool set_dead)
 {
@@ -56,11 +56,11 @@ void	print(t_philo *philo, char *str)
 
 enum e_bool	philo_init(t_data *data, int i)
 {
-	philo->philos[i].n = i + 1;
-	philo->philos[i].data = data;
-	philo->philos[i].eat_count = 0;
-	philo->philos[i].t_last_eat = 0;
-	philo->philos[i].fork_right = NULL;
+	data->philos[i].n = i + 1;
+	data->philos[i].data = data;
+	data->philos[i].eat_count = 0;
+	data->philos[i].t_last_eat = 0;
+	data->philos[i].fork_right = NULL;
 	if (pthread_mutex_init(&(data->philos[i].fork_left), NULL) != 0)
 		return (FALSE);
 	if (pthread_mutex_init(&(data->philos[i].m_eat), NULL) != 0)

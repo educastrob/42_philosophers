@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:03:04 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/23 19:18:15 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:02:50 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 int	main(int ac, char **av)
 {	
 	t_data	data;
 
-	if (argc != 5 && argc != 6)
+	if (ac != 5 && ac != 6)
 		return (EXIT_FAILURE);
-	if (!init_data(&data, argv))
+	if (!init_data(&data, av))
 	{
 		if (data.philos != NULL)
 			free(data.philos);

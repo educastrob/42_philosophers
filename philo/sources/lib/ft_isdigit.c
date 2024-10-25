@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 20:38:23 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/22 20:39:26 by edcastro         ###   ########.fr       */
+/*   Created: 2024/10/22 20:41:29 by edcastro          #+#    #+#             */
+/*   Updated: 2024/10/25 15:55:05 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../../includes/philosophers.h"
 
-int	ft_isspace(int c)
+int	ft_isdigit(int c)
 {
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	return (0);
+	if (c >= '0' && c <= '9')
+		return (42);
+	else
+		return (0);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 13:43:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/23 19:16:41 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:01:00 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 static enum e_bool	check_args(char **argv)
 {
@@ -39,8 +39,8 @@ static enum e_bool	check_args(char **argv)
 
 static enum e_bool	init_mutex(t_data *data)
 {
-	if (pthread_mutex_init(data->m_print, NULL) != 0 \
-		|| pthread_mutex_init(data->m_dead, NULL) != 0)
+	if (pthread_mutex_init(&data->m_print, NULL) != 0 \
+		|| pthread_mutex_init(&data->m_dead, NULL) != 0)
 		return (FALSE);
 	return (TRUE);
 }

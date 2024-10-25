@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 22:02:59 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/24 18:00:49 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:00:19 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/time.h>
 
 typedef struct s_data	t_data;
-typedef struct t_philo	t_philo;
+typedef struct s_philo	t_philo;
 
 // enums
 enum e_bool
@@ -41,7 +41,7 @@ typedef struct s_data
 	long int		t_sleep;
 	long int		t_start;
 	enum e_bool		stop;
-	t_philo			philos[PTHREAD_THREAD_MAX];
+	t_philo			*philos;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_dead;
 }				t_data;
