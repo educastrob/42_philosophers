@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 19:48:38 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:01:52 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 static void	*check_death(void *content);
-static void	*philo_life(void *content);
+static void	*philo_routine(void *content);
 static void	take_fork(t_philo *philo);
 static void	philo_eat(t_philo *philo);
 
@@ -29,7 +29,7 @@ enum e_bool	philo_handler(t_data *data)
 	data->t_start = timestamp();
 	while (i < data->n_philo)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, &philo_life,
+		if (pthread_create(&data->philos[i].thread, NULL, &philo_routine,
 				&(data->philos[i])) != 0)
 			return (FALSE);
 		i++;
@@ -41,7 +41,7 @@ enum e_bool	philo_handler(t_data *data)
 	return (TRUE);
 }
 
-static void	*philo_life(void *content)
+static void	*philo_routine(void *content)
 {
 	t_philo		*philo;
 	pthread_t	death;
