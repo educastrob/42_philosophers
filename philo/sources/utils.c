@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:20:56 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 18:22:34 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:46:47 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print(t_philo *philo, char *str)
 	if (!is_dead(philo, FALSE))
 	{
 		pthread_mutex_lock(&(philo->data->m_print));
-		printf("%ldms %d %s", time, philo->n, str);
+		printf("%ld %d %s", time, philo->n, str);
 		pthread_mutex_unlock(&(philo->data->m_print));
 	}
 }

@@ -1,64 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   philosophers_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/26 20:39:10 by educastro        ###   ########.fr       */
+/*   Created: 2024/10/27 15:57:06 by educastro         #+#    #+#             */
+/*   Updated: 2024/10/27 16:04:54 by educastro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
 static void	*check_death(void *content);
-static void	*philo_routine(void *content);
+static void	philo_life(t_philo *philo);
 static void	take_fork(t_philo *philo);
 static void	philo_eat(t_philo *philo);
 
-enum e_bool	philo_handler(t_data *data)
+void	philo_handler(t_data *data)
 {
-	int	i;
+	int			i;
+	pthread_t	stop;
 
 	i = 0;
 	while (i < data->n_philo)
-		if (!philo_init(data, i++))
-			return (FALSE);
+		philo_init(data, i++);
 	i = 0;
+	sem_wait(data->sem_stop);
 	data->t_start = timestamp();
 	while (i < data->n_philo)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, &philo_routine,
-				&(data->philos[i])) != 0)
-			return (FALSE);
+		data->philos[i].pid = fork();
+		if (data->philos[i].pid == 0)
+			philo_life(&(data->philos[i]));
 		i++;
 	}
+	pthread_create(&stop, NULL, stop_handler, data);
+	pthread_detach(stop);
 	i = 0;
 	while (i < data->n_philo)
-		if (pthread_join(data->philos[i++].thread, NULL) != 0)
-			return (FALSE);
-	return (TRUE);
-}
-
-static void	*philo_routine(void *content)
-{
-	t_philo		*philo;
-	pthread_t	death;
-
-	philo = content;
-	if (philo->n % 2 == 0)
-		msleep(philo->data->t_eat / 10);
-	while (!is_dead(philo, FALSE))
-	{
-		pthread_create(&death, NULL, check_death, content);
-		take_fork(philo);
-		philo_eat(philo);
-		pthread_detach(death);
-		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
-			return (NULL);
-	}
-	return (NULL);
+		waitpid(data->philos[i++].pid, NULL, 0);
+	sem_post(data->sem_stop);
 }
 
 static void	*check_death(void *content)
@@ -66,44 +48,61 @@ static void	*check_death(void *content)
 	t_philo	*philo;
 
 	philo = content;
-	msleep(philo->data->t_die);
-	pthread_mutex_lock(&philo->m_eat);
+	msleep(philo->data->t_die + 1);
+	sem_wait(philo->data->sem_eat);
 	if ((timestamp() - philo->t_last_eat) >= philo->data->t_die)
 	{
 		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
 			return (NULL);
-		pthread_mutex_unlock(&philo->m_eat);
+		sem_post(philo->data->sem_eat);
 		print(philo, "died\n");
-		is_dead(philo, TRUE);
+		sem_post(philo->data->sem_stop);
 		return (NULL);
 	}
-	pthread_mutex_unlock(&philo->m_eat);
+	sem_post(philo->data->sem_eat);
 	return (NULL);
+}
+
+static void	philo_life(t_philo *philo)
+{
+	pthread_t	death;
+
+	while (true)
+	{
+		pthread_create(&death, NULL, check_death, philo);
+		take_fork(philo);
+		philo_eat(philo);
+		pthread_detach(death);
+		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
+			exit(EXIT_SUCCESS);
+	}
 }
 
 static void	take_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->fork_l));
-	print(philo, "has taken a fork\n");
 	if (philo->data->n_philo == 1)
 	{
+		sem_wait(philo->data->sem_forks);
+		print(philo, "has taken a fork\n");
 		msleep(philo->data->t_die * 2);
 		return ;
 	}
-	pthread_mutex_lock((philo->fork_r));
+	sem_wait(philo->data->sem_forks);
+	sem_wait(philo->data->sem_forks);
+	print(philo, "has taken a fork\n");
 	print(philo, "has taken a fork\n");
 }
 
 static void	philo_eat(t_philo *philo)
 {
 	print(philo, "is eating\n");
-	pthread_mutex_lock(&(philo->m_eat));
+	sem_wait(philo->data->sem_eat);
 	philo->t_last_eat = timestamp();
 	philo->eat_count++;
-	pthread_mutex_unlock(&(philo->m_eat));
+	sem_post(philo->data->sem_eat);
 	msleep(philo->data->t_eat);
-	pthread_mutex_unlock((philo->fork_r));
-	pthread_mutex_unlock(&(philo->fork_l));
+	sem_post(philo->data->sem_forks);
+	sem_post(philo->data->sem_forks);
 	print(philo, "is sleeping\n");
 	msleep(philo->data->t_sleep);
 	print(philo, "is thinking\n");

@@ -5,32 +5,32 @@
 #                                                     +:+ +:+         +:+      #
 #    By: educastro <educastro@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/16 04:35:57 by educastro         #+#    #+#              #
-#    Updated: 2024/10/27 16:13:33 by educastro        ###   ########.fr        #
+#    Created: 2024/10/27 15:56:59 by educastro         #+#    #+#              #
+#    Updated: 2024/10/27 16:14:10 by educastro        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := philo
+NAME := philo_bonus
 CFLAGS := -Wextra -Wall -Werror
 CFLAGS += -g3 -O3 -pthread
 JOBS := -j50
-CC := cc
+
 RM := rm -rf
 
 OBJ_DIR := build
-INCLUDE_DIR := includes
-INCLUDES := -I$(INCLUDE_DIR)
+INCLUDE_DIR_BONUS := include
+INCLUDES := -I$(INCLUDE_DIR_BONUS)
 
-SRCS := sources/philosophers.c \
-		sources/init.c \
-		sources/utils.c \
-		sources/exit.c \
-		sources/main.c
-SRCS += sources/lib/ft_isspace.c \
-        sources/lib/ft_atoi.c \
-        sources/lib/ft_isdigit.c \
-        sources/lib/ft_memset.c
-OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+SRCS_BONUS := sources/utils_bonus.c \
+				sources/exit_bonus.c \
+				sources/main_bonus.c \
+				sources/philosophers_bonus.c \
+				sources/init_bonus.c
+SRCS_BONUS += sources/lib/ft_memset_bonus.c \
+				sources/lib/ft_isdigit_bonus.c \
+				sources/lib/ft_atoi_bonus.c \
+				sources/lib/ft_isspace_bonus.c
+OBJS_BONUS := $(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:.c=.o))
 
 all: $(NAME)
 
@@ -41,9 +41,11 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): print_start $(OBJS)
-	@$(CC) $(OBJS) $(INCLUDES) $(CFLAGS) -o $(NAME)
+$(NAME): print_start $(OBJS_BONUS)
+	@$(CC) $(OBJS_BONUS) $(INCLUDES) $(CFLAGS) -o $(NAME)
 	@echo "$(NAME) COMPILED!$(RESET)"
+
+bonus:
 
 clean:
 	@$(RM) $(OBJ_DIR)
@@ -53,4 +55,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all print_start clean fclean re
+.PHONY: all print_start clean fclean bonus re
