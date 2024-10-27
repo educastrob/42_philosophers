@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 15:57:16 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/27 16:04:31 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/27 17:28:20 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static bool	check_args(char **argv);
-static bool	init_semaphores(t_data *data);
-static bool	init_args(t_data *data, char **argv);
+static enum e_bool	check_args(char **argv);
+static enum e_bool	init_semaphores(t_data *data);
+static enum e_bool	init_args(t_data *data, char **argv);
 
-bool	init_data(t_data *data, char **argv)
+enum e_bool	init_data(t_data *data, char **argv)
 {
 	if (!check_args(argv))
 	{
 		printf("Invalid Arguments\n");
-		return (false);
+		return (FALSE);
 	}
 	ft_memset(data, 0, sizeof(t_data));
 	data->n_philo = ft_atoi(argv[1]);
 	if (data->n_philo <= 0)
-		return (false);
+		return (FALSE);
 	if (!init_semaphores(data))
-		return (false);
+		return (FALSE);
 	data->philos = malloc(sizeof(t_philo) * data->n_philo);
 	if (data->philos == NULL)
-		return (false);
+		return (FALSE);
 	ft_memset(data->philos, 0, sizeof(t_philo) * data->n_philo);
 	if (!init_args(data, argv))
 	{
 		printf("Invalid Arguments\n");
-		return (false);
+		return (FALSE);
 	}
-	return (true);
+	return (TRUE);
 }
 
-static bool	check_args(char **argv)
+static enum e_bool	check_args(char **argv)
 {
 	size_t	i;
 	size_t	j;
@@ -55,19 +55,19 @@ static bool	check_args(char **argv)
 		if (argv[i][j] == '-' || argv[i][j] == '+')
 			j++;
 		if (argv[i][j] == '\0')
-			return (false);
+			return (FALSE);
 		while (argv[i][j] != '\0')
 		{
 			if (!ft_isdigit(argv[i][j]))
-				return (false);
+				return (FALSE);
 			j++;
 		}
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
 
-static bool	init_semaphores(t_data *data)
+static enum e_bool	init_semaphores(t_data *data)
 {
 	sem_unlink("print");
 	sem_unlink("stop");
@@ -79,23 +79,23 @@ static bool	init_semaphores(t_data *data)
 	data->sem_forks = sem_open("forks", O_CREAT, 0666, data->n_philo);
 	if (data->sem_print == SEM_FAILED || data->sem_stop == SEM_FAILED
 		|| data->sem_eat == SEM_FAILED || data->sem_forks == SEM_FAILED)
-		return (false);
-	return (true);
+		return (FALSE);
+	return (TRUE);
 }
 
-static bool	init_args(t_data *data, char **argv)
+static enum e_bool	init_args(t_data *data, char **argv)
 {
 	data->n_philo_eat = 0;
 	data->t_die = ft_atoi(argv[2]);
 	data->t_eat = ft_atoi(argv[3]);
 	data->t_sleep = ft_atoi(argv[4]);
 	if (data->t_die <= 0 || data->t_eat <= 0 || data->t_sleep <= 0)
-		return (false);
+		return (FALSE);
 	if (argv[5] != NULL)
 	{
 		data->n_eat = ft_atoi(argv[5]);
 		if (data->n_eat <= 0)
-			return (false);
+			return (FALSE);
 	}
-	return (true);
+	return (TRUE);
 }

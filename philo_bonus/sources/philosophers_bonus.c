@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 15:57:06 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/27 16:04:54 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/27 17:45:15 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
 static void	*check_death(void *content);
-static void	philo_life(t_philo *philo);
+static void	philo_routine(t_philo *philo);
 static void	take_fork(t_philo *philo);
 static void	philo_eat(t_philo *philo);
 
@@ -32,7 +32,7 @@ void	philo_handler(t_data *data)
 	{
 		data->philos[i].pid = fork();
 		if (data->philos[i].pid == 0)
-			philo_life(&(data->philos[i]));
+			philo_routine(&(data->philos[i]));
 		i++;
 	}
 	pthread_create(&stop, NULL, stop_handler, data);
@@ -63,11 +63,11 @@ static void	*check_death(void *content)
 	return (NULL);
 }
 
-static void	philo_life(t_philo *philo)
+static void	philo_routine(t_philo *philo)
 {
 	pthread_t	death;
 
-	while (true)
+	while (TRUE)
 	{
 		pthread_create(&death, NULL, check_death, philo);
 		take_fork(philo);

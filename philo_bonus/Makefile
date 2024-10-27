@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: educastro <educastro@student.42.fr>        +#+  +:+       +#+         #
+#    By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/27 15:56:59 by educastro         #+#    #+#              #
-#    Updated: 2024/10/27 16:14:10 by educastro        ###   ########.fr        #
+#    Updated: 2024/10/27 17:23:51 by edcastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME := philo_bonus
 CFLAGS := -Wextra -Wall -Werror
 CFLAGS += -g3 -O3 -pthread
 JOBS := -j50
-
+CC := cc
 RM := rm -rf
 
 OBJ_DIR := build
-INCLUDE_DIR_BONUS := include
+INCLUDE_DIR_BONUS := includes
 INCLUDES := -I$(INCLUDE_DIR_BONUS)
 
 SRCS_BONUS := sources/utils_bonus.c \

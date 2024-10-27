@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 15:57:22 by educastro         #+#    #+#             */
-/*   Updated: 2024/10/27 16:05:23 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/27 17:26:42 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 
 typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
+
+enum e_bool
+{
+	FALSE,
+	TRUE
+};
 
 typedef struct s_data
 {
@@ -56,7 +62,7 @@ typedef struct s_philo
 void					free_all(t_data *data);
 
 // Init
-bool					init_data(t_data *data, char **argv);
+enum e_bool				init_data(t_data *data, char **argv);
 
 // Philosophers
 void					philo_handler(t_data *data);
@@ -70,8 +76,8 @@ void					*stop_handler(void *content);
 
 // Lib
 long int				ft_atoi(const char *str);
-bool					ft_isdigit(int c);
-bool					ft_isspace(int c);
+enum e_bool				ft_isdigit(int c);
+enum e_bool				ft_isspace(int c);
 void					*ft_memset(void *s, int c, size_t n);
 
 #endif
