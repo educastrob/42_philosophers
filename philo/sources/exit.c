@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:38:05 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/25 17:09:53 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:42:57 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	free_all(t_data *data)
 	while (i < data->n_philo)
 	{
 		pthread_mutex_destroy(&data->philos[i].m_eat);
-		pthread_mutex_destroy(&data->philos[i++].fork_l);
+		pthread_mutex_destroy(&data->philos[i].fork_l);
+		i++;
 	}
 	pthread_mutex_destroy(&data->m_print);
 	pthread_mutex_destroy(&data->m_dead);
