@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: educastro <educastro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/26 20:39:10 by educastro        ###   ########.fr       */
+/*   Updated: 2024/10/28 19:23:40 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ static void	*philo_routine(void *content)
 	philo = content;
 	if (philo->n % 2 == 0)
 		msleep(philo->data->t_eat / 10);
+	if (pthread_create(&death, NULL, check_death, content) != 0)
+        return (NULL);
+    pthread_detach(death);
 	while (!is_dead(philo, FALSE))
 	{
-		pthread_create(&death, NULL, check_death, content);
 		take_fork(philo);
 		philo_eat(philo);
-		pthread_detach(death);
 		if (philo->data->n_eat != 0 && philo->eat_count == philo->data->n_eat)
 			return (NULL);
 	}
