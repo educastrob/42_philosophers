@@ -6,7 +6,7 @@
 /*   By: edcastro <edcastro@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:32:13 by edcastro          #+#    #+#             */
-/*   Updated: 2024/10/28 19:23:40 by edcastro         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:24:51 by edcastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	*philo_routine(void *content)
 	if (philo->n % 2 == 0)
 		msleep(philo->data->t_eat / 10);
 	if (pthread_create(&death, NULL, check_death, content) != 0)
-        return (NULL);
-    pthread_detach(death);
+		return (NULL);
+	pthread_detach(death);
 	while (!is_dead(philo, FALSE))
 	{
 		take_fork(philo);
