@@ -44,10 +44,10 @@ Git clone the project and for the mandatory part:
 ```shell
 cd philosophers/philo
 ```
-To compile, use ```make``` or:
+To compile, use:
 
 ```shell
-make BUILD=pretty
+make all
 ```
 
 Run the program with the following arguments:
@@ -74,10 +74,10 @@ Git clone the project and for the bonus part:
 ```shell
 cd philosophers/philo_bonus
 ```
-To compile, use ```make``` or:
+To compile, use:
 
 ```shell
-make BUILD=pretty
+make all
 ```
 
 Run the program with the following arguments:
